@@ -134,7 +134,6 @@ class HangManGame:
 def hangman_game_play():
     game = HangManGame("hangman")
     game.start()
-    is_success = True
     while game.index < game.MAX_INDEX:
         challenge = input(f'문자를 입력 하세요. 정답을 알 것 같으면 숫자 {0} 을 입력해 주세요 : ')
         if challenge == '0':
