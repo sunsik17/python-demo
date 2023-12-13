@@ -31,7 +31,6 @@ class HangManGame:
             self.__print_all()
             return self
 
-        print('정답 입니다.')
         self.index = self.MAX_INDEX
 
     def start(self) -> None:
@@ -83,6 +82,7 @@ class HangManGame:
 def hangman_game_play():
     game = HangManGame("hangman")
     game.start()
+    print(f'맞춰야 하는 단어는 {len(game.answer)} 글자 입니다.')
     while game.index < game.MAX_INDEX:
         challenge = input(f'문자를 입력 하세요. 정답을 알 것 같으면 숫자 {0}, 현재 Hangman의 상태를 보고 싶으면 {1} 을 입력해 주세요 : ')
         if challenge == '0':
@@ -97,9 +97,9 @@ def hangman_game_play():
                 continue
 
     if game.is_success:
-        print('정답입니다.\n 성공을 축하 합니다. 게임이 종료 됩니다.')
+        print('정답입니다.\n성공을 축하 합니다. 게임이 종료 됩니다.')
     else:
-        print('실패입니다.\n hangman이 죽었습니다. 게임이 종료 됩니다.')
+        print('실패입니다.\nhangman이 죽었습니다. 게임이 종료 됩니다.')
 
 
 hangman_game_play()
