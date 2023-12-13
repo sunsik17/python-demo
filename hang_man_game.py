@@ -1,72 +1,6 @@
-hangman_pics = [
-    """
-     ------
-     |    |
-     |
-     |
-     |
-     |
-    ---
-    """,
-    """
-     ------
-     |    |
-     |    O
-     |
-     |
-     |
-    ---
-    """,
-    """
-     ------
-     |    |
-     |    O
-     |    |
-     |
-     |
-    ---
-    """,
-    """
-     ------
-     |    |
-     |    O
-     |   /|
-     |
-     |
-    ---
-    """,
-    """
-     ------
-     |    |
-     |    O
-     |   /|\\
-     |
-     |
-    ---
-    """,
-    """
-     ------
-     |    |
-     |    O
-     |   /|\\
-     |   /
-     |
-    ---
-    """,
-    """
-     ------
-     |    |
-     |    O
-     |   /|\\
-     |   / \\
-     |
-    ---""",
-]
+from hangman_pics import final_hangman_pics
 
-
-def wrap(fun):
-    def mapping():
-        print('실행')
+hangman_pics = final_hangman_pics
 
 
 class HangManGame:
@@ -84,38 +18,48 @@ class HangManGame:
             print('문자는 꼭 한 글자를 입력해 주세요. 다시 실행 합니다.')
             raise
 
-        self.__yes_or_no(char)
-        self.__print(self.index)
-        if self.__is_same(self.current_my_word):
-            self.index = 7
+        if self.__yes_or_no(char):
+            self.__print_current_my_word()
+            if self.__is_same(self.current_my_word):
+                self.index = 7
+        else:
+            self.__print_all()
 
     def solve(self, word: str):
         if not self.__is_same(word):
             self.index += 1
-            self.__print(self.index)
+            self.__print_all()
             return self
 
-        print('정답 입니다')
+        print('정답 입니다.')
         self.index = self.MAX_INDEX
 
     def start(self) -> None:
         print('게임을 시작 합니다.')
-        self.__print(self.index)
+        self.__print_all()
 
-    def __print(self, index: int) -> None:
-        print(hangman_pics[index])
+    def __print_all(self) -> None:
+        self.print_hangman_status()
+        self.__print_current_my_word()
+
+    def print_hangman_status(self) -> None:
+        print(hangman_pics[self.index])
+
+    def __print_current_my_word(self) -> None:
         print(f'현재 까지 맞춘 단어 : {self.current_my_word}')
 
     def __is_same(self, word: str) -> bool:
         self.is_success = word.lower() == self.answer.lower()
         return self.is_success
 
-    def __yes_or_no(self, char: str) -> None:
+    def __yes_or_no(self, char: str) -> bool:
         if char in self.answer:
             index_list = self.__get_index(char)
             self.current_my_word = self.__converting_my_word(index_list, char)
-        else:
-            self.index += 1
+            return True
+
+        self.index += 1
+        return False
 
     def __get_index(self, char: str) -> list:
         result = []
@@ -140,10 +84,12 @@ def hangman_game_play():
     game = HangManGame("hangman")
     game.start()
     while game.index < game.MAX_INDEX:
-        challenge = input(f'문자를 입력 하세요. 정답을 알 것 같으면 숫자 {0} 을 입력해 주세요 : ')
+        challenge = input(f'문자를 입력 하세요. 정답을 알 것 같으면 숫자 {0}, 현재 Hangman의 상태를 보고 싶으면 {1} 을 입력해 주세요 : ')
         if challenge == '0':
             word = input('정답이라고 생각 하는 단어를 입력해 주세요. : ')
             game.solve(word)
+        elif challenge == '1':
+            game.print_hangman_status()
         else:
             try:
                 game.attempt(challenge)
@@ -151,9 +97,9 @@ def hangman_game_play():
                 continue
 
     if game.is_success:
-        print('성공을 축하 합니다. 게임이 종료 됩니다.')
+        print('정답입니다.\n 성공을 축하 합니다. 게임이 종료 됩니다.')
     else:
-        print('hangman이 죽었습니다. 게임이 종료 됩니다.')
+        print('실패입니다.\n hangman이 죽었습니다. 게임이 종료 됩니다.')
 
 
 hangman_game_play()
