@@ -21,7 +21,7 @@ class HangManGame:
         if self.__yes_or_no(char):
             self.__print_current_my_word()
             if self.__is_same(self.current_my_word):
-                self.index = 7
+                self.index = self.MAX_INDEX
         else:
             self.__print_all()
 
@@ -29,7 +29,7 @@ class HangManGame:
         if not self.__is_same(word):
             self.index += 1
             self.__print_all()
-            return self
+            return
 
         self.index = self.MAX_INDEX
 
