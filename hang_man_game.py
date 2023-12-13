@@ -83,7 +83,6 @@ class HangManGame:
         if self.__is_same(self.current_my_word):
             self.index = 7
 
-
     def solve(self, word: str):
         if not self.__is_same(word):
             self.index += 1
