@@ -1,6 +1,6 @@
 # python으로 만드는 hangman 게임
 
-## flow
+## 진행
 - 정답으로 확인할 answer를 정해준다.
 - 정답을 갖는 HangManGame객체가 생성된다
 - 게임을 시작한다.
